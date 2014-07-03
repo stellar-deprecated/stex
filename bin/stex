@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+
+program
+  .version('0.0.1');
+
+program
+  .command('www')
+  .description('start a server running the app')
+  .action(function(){
+    loadApp(); 
+    var port = conf.get('PORT')
+    var server = app.listen(port, function() {
+      log.debug('Express server listening on port ' + server.address().port);
+    });
+  });
+
+program
+  .command('console')
+  .description('start a repl')
+  .action(function(){
+    loadApp();
+    var repl   = require('repl');
+    var r = repl.start("> ");
+  });
+
+program
+  .command('db-console')
+  .description('starts a database console')
+  .action(function(){
+    //TODO
+  });
+
+program
+  .command('db-migrate <cmd> [args]')
+  .description('starts a database console')
+  .action(function(cmd, args){
+    console.log(cmd)
+    console.log(args)
+  });
+
+program.parse(process.argv);
+
+function loadApp() {
+  require(process.cwd() + "/lib/app");
+}

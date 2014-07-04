@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // re-exec as the local version of stex if possible
-var localbin = require("../lib/localbin");
+var localbin = require("../lib/util/localbin");
 localbin();
 
 var program = require('commander');

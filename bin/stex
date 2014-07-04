@@ -33,11 +33,21 @@ program
   });
 
 program
-  .command('db-migrate <cmd> [args]')
-  .description('starts a database console')
-  .action(function(cmd, args){
-    console.log(cmd)
-    console.log(args)
+  .command('db-migrate <cmd> [arg]')
+  .description('run the migration tool')
+  .action(function(cmd, arg){
+    var kexec   = require("kexec");
+    loadApp();
+    var program = __dirname + '/../node_modules/.bin/db-migrate';
+    var args    = [
+      "--config",
+      __dirname + "/../lib/db-migrate/config.js",
+      "--env",
+      conf.NODE_ENV,
+      cmd,
+      arg
+    ]
+    kexec(program, args);
   });
 
 program

@@ -4,6 +4,9 @@
 var localbin = require("../lib/util/localbin");
 localbin();
 
+var gotoPackageRoot = require("../lib/util/goto-package-root");
+gotoPackageRoot();
+
 var program = require('commander');
 
 program

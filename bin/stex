@@ -9,7 +9,7 @@ program
   .command('www')
   .description('start a server running the app')
   .action(function(){
-    loadApp(); 
+    bootApp();
     var port = conf.get('PORT')
     var server = app.listen(port, function() {
       log.debug('Express server listening on port ' + server.address().port);
@@ -20,7 +20,7 @@ program
   .command('console')
   .description('start a repl')
   .action(function(){
-    loadApp();
+    bootApp();
     var repl   = require('repl');
     var r = repl.start("> ");
   });
@@ -65,5 +65,13 @@ program
 program.parse(process.argv);
 
 function loadApp() {
-  require(process.cwd() + "/lib/app");
+  if(stex){ return; } //only load once
+
+  var stex = require(process.cwd() + "/lib/app");
+  stex.activate();
+}
+
+function bootApp() {
+  loadApp();
+  stex.boot();
 }

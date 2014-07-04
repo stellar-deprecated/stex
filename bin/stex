@@ -40,6 +40,18 @@ program
     console.log(args)
   });
 
+program
+  .command('humanize-logs')
+  .description('processes a stream of json events into a humanized view')
+  .action(function(cmd, args){
+    var split     = require("split");
+    var humanizer = require('../lib/util/json-log-humanizer')
+
+    process.stdin
+      .pipe(split(null, humanizer.processLine))
+      .pipe(process.stdout)
+  });
+
 program.parse(process.argv);
 
 function loadApp() {

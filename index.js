@@ -1,2 +1,2 @@
 
-module.exports = require("./lib/stellar-express");
+module.exports = require("./lib/stex");

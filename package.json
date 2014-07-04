@@ -1,5 +1,5 @@
 {
-  "name": "stellar-express",
+  "name": "stex",
   "version": "0.0.1",
   "description": "An opinionated framework built on top of expressjs used to build better web services for stellar",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/stellar-express"
+    "url": "http://github.com/stex"
   },
   "author": "Scott Fleckenstein",
   "license": "MIT",

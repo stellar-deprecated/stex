@@ -19,7 +19,7 @@ program
     bootApp();
     var port = conf.get('PORT')
     var server = app.listen(port, function() {
-      log.debug('Express server listening on port ' + server.address().port);
+      log.debug(stex.name + ' server listening on port ' + server.address().port);
     });
   });
 

@@ -46,7 +46,35 @@ program
   .command('db-console')
   .description('starts a database console')
   .action(function(){
-    //TODO
+    var kexec = require("kexec");
+    loadApp();
+    var db = conf.get("db");
+
+    if(db.client !== "mysql") {
+      console.log("Invalid client: " + db.client + ". only mysql supported for now");
+      process.exit(1);
+    }
+
+    var program = "mysql";
+    var args = [];
+
+    if(db.connection.host) {
+      args.push("-h")
+      args.push(db.connection.host)
+    }
+
+    if(db.connection.user) {
+      args.push("-u")
+      args.push(db.connection.user)
+    }
+
+    if(db.connection.password) {
+      args.push("-p")
+      args.push(db.connection.password)
+    }
+
+    args.push(db.connection.database);
+    kexec(program, args);
   });
 
 program

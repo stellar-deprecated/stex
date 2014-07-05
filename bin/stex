@@ -10,17 +10,27 @@ gotoPackageRoot();
 var program = require('commander');
 
 program
-  .version('0.0.1');
+  .version('0.0.1')
+  .option('--watch', 'restart server if any files change');
 
 program
   .command('www')
   .description('start a server running the app')
   .action(function(){
-    bootApp();
-    var port = conf.get('PORT')
-    var server = app.listen(port, function() {
-      log.debug(stex.name + ' server listening on port ' + server.address().port);
-    });
+    if(program.watch) {
+      var nodemon = require("nodemon");
+      nodemon({
+        exec: 'stex www',
+        ext: 'js json'
+      });
+
+    } else {
+      bootApp();
+      var port = conf.get('PORT')
+      var server = app.listen(port, function() {
+        log.debug(stex.name + ' server listening on port ' + server.address().port);
+      });
+    }
   });
 
 program

@@ -81,7 +81,26 @@ automically start reporting error data to sentry for you.
 ## And More...
 
 ### Stex CLI
+
+The Stex CLI is your gateway.  It provides a series of subcommands that should help you in your day-to-day:  `www`, `console`, `db-console`, `db-migrate` and `humanize-logs`.  We'll go through each one:
+
+#### stex www
+
+Starts up a server process.  Add the option --watch to have stex watch your 
+directory for file changes and automatically restart itself when it needs to.
+
+#### stex console
+
+Opens up a REPL with the Stex application globals loaded.
+
+#### stex db-console
+
+Opens up a MySQL console given the current configuration
+
+#### stex db-migrate
+
 TODO
+
 
 ### Gulp
 TODO
@@ -89,3 +108,33 @@ TODO
 ### Testing
 TODO
 
+### Lifecycle
+
+A Stex application has, at present, 4 different lifecycle events that happen:  
+init, activate, boot, and finally shutdown. 
+
+####  Init
+
+Loading your stex application (by requiring your app.js) will initiate the 
+'init' event, and will initialize as much of the framework as possible... 
+notably it will allow you to use the logging and configuration infrastructure 
+of the app.
+
+#### Activate
+
+Stex is not designed to have multiple concurrent stex applications running in 
+the same process; By taking this stance, we allow you to make your app code more
+concise by relying upon a curated set of global vars we think most of your code
+needs access to.  Activation is the lifecycle event that installs these global
+vars.
+
+#### Boot
+
+Everything else needed to get your application loaded runs during the boot event.
+Database connections, middleware installation, routing definitions, and heavy 
+work.
+
+#### Shutdown
+
+Can be triggered to force db connections to close, etc. so that your process can
+gracefully terminate.

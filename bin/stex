@@ -25,11 +25,12 @@ program
       });
 
     } else {
-      bootApp();
-      var port = conf.get('PORT')
-      var server = app.listen(port, function() {
-        log.debug(stex.name + ' server listening on port ' + server.address().port);
-      });
+      bootApp().then(function() {
+        var port = conf.get('PORT')
+        var server = app.listen(port, function() {
+          log.debug(stex.name + ' server listening on port ' + server.address().port);
+        });
+      })
     }
   });
 
@@ -37,9 +38,10 @@ program
   .command('console')
   .description('start a repl')
   .action(function(){
-    bootApp();
-    var repl   = require('repl');
-    var r = repl.start("> ");
+    bootApp().then(function() {
+      var repl   = require('repl');
+      var r = repl.start("> ");
+    })
   });
 
 program
@@ -47,34 +49,35 @@ program
   .description('starts a database console')
   .action(function(){
     var kexec = require("kexec");
-    loadApp();
-    var db = conf.get("db");
+    loadApp().then(function() {
+      var db = conf.get("db");
 
-    if(db.client !== "mysql") {
-      console.log("Invalid client: " + db.client + ". only mysql supported for now");
-      process.exit(1);
-    }
+      if(db.client !== "mysql") {
+        console.log("Invalid client: " + db.client + ". only mysql supported for now");
+        process.exit(1);
+      }
 
-    var program = "mysql";
-    var args = [];
+      var program = "mysql";
+      var args = [];
 
-    if(db.connection.host) {
-      args.push("-h")
-      args.push(db.connection.host)
-    }
+      if(db.connection.host) {
+        args.push("-h")
+        args.push(db.connection.host)
+      }
 
-    if(db.connection.user) {
-      args.push("-u")
-      args.push(db.connection.user)
-    }
+      if(db.connection.user) {
+        args.push("-u")
+        args.push(db.connection.user)
+      }
 
-    if(db.connection.password) {
-      args.push("-p")
-      args.push(db.connection.password)
-    }
+      if(db.connection.password) {
+        args.push("-p")
+        args.push(db.connection.password)
+      }
 
-    args.push(db.connection.database);
-    kexec(program, args);
+      args.push(db.connection.database);
+      kexec(program, args);
+    });
   });
 
 program
@@ -82,17 +85,18 @@ program
   .description('run the migration tool')
   .action(function(cmd, arg){
     var kexec   = require("kexec");
-    loadApp();
-    var program = __dirname + '/../node_modules/.bin/db-migrate';
-    var args    = [
-      "--config",
-      __dirname + "/../lib/db-migrate/config.js",
-      "--env",
-      conf.NODE_ENV,
-      cmd,
-      arg
-    ]
-    kexec(program, args);
+    loadApp().then(function() {
+      var program = __dirname + '/../node_modules/.bin/db-migrate';
+      var args    = [
+        "--config",
+        __dirname + "/../lib/db-migrate/config.js",
+        "--env",
+        conf.NODE_ENV,
+        cmd,
+        arg
+      ]
+      kexec(program, args);
+    });
   });
 
 program
@@ -110,13 +114,13 @@ program
 program.parse(process.argv);
 
 function loadApp() {
-  if(stex){ return; } //only load once
-
-  var stex = require(process.cwd() + "/lib/app");
-  stex.activate();
+  return require(process.cwd() + "/lib/app").then(function(stex) {
+    return stex.activate();
+  });
 }
 
 function bootApp() {
-  loadApp();
-  stex.boot();
+  return loadApp().then(function(stex) {
+    return stex.boot();
+  });
 }

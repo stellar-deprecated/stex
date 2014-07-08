@@ -30,6 +30,7 @@
     "mysql": "^2.2.0",
     "nconf": "^0.6.9",
     "node-syslog": "^1.1.7",
+    "nodemailer": "^0.7.0",
     "nodemon": "^1.2.1",
     "raven": "^0.7.0",
     "redis": "^0.10.3",

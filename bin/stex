@@ -25,7 +25,7 @@ program
       });
 
     } else {
-      bootApp().then(function() {
+      loadApp().then(function() {
         var port = conf.get('PORT')
         var server = app.listen(port, function() {
           log.debug(stex.name + ' server listening on port ' + server.address().port);
@@ -38,7 +38,7 @@ program
   .command('console')
   .description('start a repl')
   .action(function(){
-    bootApp().then(function() {
+    loadApp().then(function() {
       var repl   = require('repl');
       var r = repl.start("> ");
     })
@@ -116,11 +116,5 @@ program.parse(process.argv);
 function loadApp() {
   return require(process.cwd() + "/lib/app").then(function(stex) {
     return stex.activate();
-  });
-}
-
-function bootApp() {
-  return loadApp().then(function(stex) {
-    return stex.boot();
   });
 }

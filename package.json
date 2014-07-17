@@ -1,6 +1,6 @@
 {
   "name": "stex",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An opinionated framework built on top of expressjs used to build better web services for stellar",
   "main": "index.js",
   "private": true,

@@ -114,7 +114,7 @@ program
 program.parse(process.argv);
 
 function loadApp() {
-  return require(process.cwd() + "/lib/app").then(function(stex) {
+  return require(process.cwd() + "/lib/app").init().then(function(stex) {
     return stex.activate();
   });
 }

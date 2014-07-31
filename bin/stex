@@ -39,7 +39,7 @@ program
         });
       } else {
         loadApp().then(function() {
-          var port = 80; //conf.get('PORT')
+          var port = conf.get('PORT')
           var server = app.listen(port, function() {
             console.log(stex.name + '-' + process.pid + ' listening on port ' + server.address().port);
           });

@@ -25,12 +25,26 @@ program
       });
 
     } else {
-      loadApp().then(function() {
-        var port = conf.get('PORT')
-        var server = app.listen(port, function() {
-          log.debug(stex.name + ' server listening on port ' + server.address().port);
+      var cluster = require('cluster');
+      var numCPUs = require('os').cpus().length;
+
+      if (cluster.isMaster) {
+        for (var i = 0; i < numCPUs; i++) {
+          cluster.fork();
+        }
+
+        cluster.on('exit', function(worker, code, signal) {
+          cluster.fork();
+          console.log('worker ' + worker.process.pid + ' died');
         });
-      })
+      } else {
+        loadApp().then(function() {
+          var port = 80; //conf.get('PORT')
+          var server = app.listen(port, function() {
+            console.log(stex.name + '-' + process.pid + ' listening on port ' + server.address().port);
+          });
+        });
+      }
     }
   });
 

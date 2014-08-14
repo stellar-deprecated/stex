@@ -11,7 +11,8 @@ var program = require('commander');
 
 program
   .version('0.0.1')
-  .option('--watch', 'restart server if any files change');
+  .option('--watch', 'restart server if any files change')
+  .option('--nocluster', 'dont run within a cluster');
 
 program
   .command('www')
@@ -27,9 +28,10 @@ program
     } else {
       var cluster = require('cluster');
       var numCPUs = require('os').cpus().length;
+      var childCount = program.nocluster ? 1 : numCPUs;
 
       if (cluster.isMaster) {
-        for (var i = 0; i < numCPUs; i++) {
+        for (var i = 0; i < childCount; i++) {
           cluster.fork();
         }
 

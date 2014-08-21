@@ -135,7 +135,11 @@ program
   .action(function(script){
     loadApp().then(function() {
       fs.readFile(__dirname + '/../scripts/' + script + '.js', 'utf-8', function(err, data){
-        vm.runInThisContext(data, script+'.js');
+        try{
+          vm.runInThisContext(data, script+'.js');
+        } catch (e) {
+          console.error(e.stack);
+        }
       })
     });
   });

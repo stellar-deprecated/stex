@@ -61,7 +61,7 @@ program
       var r = repl.start({'prompt':"> ", 'eval':function(code, context, file, callback){
         defaultEval(code, context, file, function(err, result){
           if(result instanceof Promise){
-            callback(err, result.then(console.log));
+            callback(err, result.value());
           }else{
             callback(err, result);
           }

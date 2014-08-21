@@ -8,6 +8,8 @@ var gotoPackageRoot = require("../lib/util/goto-package-root");
 gotoPackageRoot();
 
 var program = require('commander');
+var vm = require('vm');
+var fs = require('fs');
 
 program
   .version('0.0.1')
@@ -125,6 +127,17 @@ program
     process.stdin
       .pipe(split(null, humanizer.processLine))
       .pipe(process.stdout)
+  });
+
+program
+  .command('run <script>')
+  .description('run the script file under scripts/')
+  .action(function(script){
+    loadApp().then(function() {
+      fs.readFile(__dirname + '/../scripts/' + script + '.js', 'utf-8', function(err, data){
+        vm.runInThisContext(data, script+'.js');
+      })
+    });
   });
 
 program.parse(process.argv);

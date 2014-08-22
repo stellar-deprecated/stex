@@ -10,6 +10,7 @@ gotoPackageRoot();
 var program = require('commander');
 var Promise = require('bluebird');
 var vm = require('vm');
+var fs = require('fs');
 
 program
   .version('0.0.1')
@@ -135,6 +136,21 @@ program
     process.stdin
       .pipe(split(null, humanizer.processLine))
       .pipe(process.stdout)
+  });
+
+program
+  .command('run <script>')
+  .description('run the script file under scripts/')
+  .action(function(script){
+    loadApp().then(function() {
+      fs.readFile(__dirname + '/../scripts/' + script + '.js', 'utf-8', function(err, data){
+        try{
+          vm.runInThisContext(data, script+'.js');
+        } catch (e) {
+          console.error(e.stack);
+        }
+      })
+    });
   });
 
 program.parse(process.argv);

@@ -8,6 +8,7 @@ var gotoPackageRoot = require("../lib/util/goto-package-root");
 gotoPackageRoot();
 
 var program = require('commander');
+var Promise = require('bluebird');
 var vm = require('vm');
 var fs = require('fs');
 
@@ -58,7 +59,15 @@ program
   .action(function(){
     loadApp().then(function() {
       var repl   = require('repl');
-      var r = repl.start("> ");
+      var r = repl.start({'prompt':"> ", 'eval':function(code, context, file, callback){
+        defaultEval(code, context, file, function(err, result){
+          if(result instanceof Promise){
+            callback(err, result.value());
+          }else{
+            callback(err, result);
+          }
+        });
+      }});
     })
   });
 
@@ -145,6 +154,21 @@ program
   });
 
 program.parse(process.argv);
+
+var defaultEval = function(code, context, file, cb) {
+  var err, result;
+  try {
+    result = vm.runInContext(code, context, file);
+  } catch (e) {
+    err = e;
+  }
+  if (err && process.domain) {
+    process.domain.emit('error', err);
+    process.domain.exit();
+  } else {
+    cb(err, result);
+  }
+};
 
 function loadApp() {
   return require(process.cwd() + "/lib/app").init().then(function(stex) {

@@ -24,7 +24,7 @@ program
     if(program.watch) {
       var nodemon = require("nodemon");
       nodemon({
-        exec: 'stex www',
+        exec: 'stex www --nocluster',
         ext: 'js json'
       });
 

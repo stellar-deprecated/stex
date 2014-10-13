@@ -143,13 +143,11 @@ program
   .description('run the script file under scripts/')
   .action(function(script){
     loadApp().then(function() {
-      fs.readFile(__dirname + '/../scripts/' + script + '.js', 'utf-8', function(err, data){
-        try{
-          vm.runInThisContext(data, script+'.js');
-        } catch (e) {
-          console.error(e.stack);
-        }
-      })
+      try{
+        require(stex.root + '/scripts/' + script);
+      } catch (e) {
+        console.error(e.stack);
+      }
     });
   });
 

@@ -128,7 +128,6 @@ program
 
 program
   .command('migrate <cmd> [arg]')
-  .option('-n, --name', 'name of migration')
   .description('run the migration tool')
   .action(function (cmd, arg) {
     return loadApp().then(function () {
@@ -138,6 +137,9 @@ program
       } catch (e) {
         console.error(e);
       }
+    })
+    .finally(function () {
+      stex.shutdown();
     })
   });
 

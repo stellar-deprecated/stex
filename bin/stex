@@ -127,6 +127,23 @@ program
   });
 
 program
+  .command('migrate <cmd> [arg]')
+  .description('run the migration tool')
+  .action(function (cmd, arg) {
+    return loadApp().then(function () {
+      try {
+        var migrate = require('../lib/migrate');
+        return migrate.run(cmd, arg);
+      } catch (e) {
+        console.error(e);
+      }
+    })
+    .finally(function () {
+      stex.shutdown();
+    })
+  });
+
+program
   .command('humanize-logs')
   .description('processes a stream of json events into a humanized view')
   .action(function(cmd, args){

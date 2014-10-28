@@ -113,6 +113,11 @@ program
   .action(function(cmd, arg){
     var kexec   = require("kexec");
     loadApp().then(function() {
+      if (!fs.existsSync(stex.root + "/migrations")) {
+        console.info("No migrations in /migrations");
+        process.exit(0);
+        return;
+      }
       var program = __dirname + '/../node_modules/.bin/db-migrate';
       var args    = [
         "--config",
@@ -131,6 +136,11 @@ program
   .description('run the migration tool')
   .action(function (cmd, arg) {
     return loadApp().then(function () {
+      if (!fs.existsSync(stex.root + "/migrations-knex")) {
+        console.info("No migrations in /migrations-knex");
+        process.exit(0);
+        return;
+      }
       try {
         var migrate = require('../lib/migrate');
         return migrate.run(cmd, arg);

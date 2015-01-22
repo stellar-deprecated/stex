@@ -47,6 +47,7 @@
     "nodemon": "^1.2.1",
     "raven": "^0.7.0",
     "redis": "^0.10.3",
+    "run-sequence": "^1.0.2",
     "sequencify": "0.0.7",
     "sinon": "^1.10.3",
     "split": "^0.3.0",

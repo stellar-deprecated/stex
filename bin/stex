@@ -150,6 +150,7 @@ program
     })
     .finally(function () {
       stex.shutdown();
+      process.exit(0);
     })
   });
 

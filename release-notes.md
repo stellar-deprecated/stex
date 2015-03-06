@@ -4,13 +4,18 @@
 
 [Commits](https://github.com/stellar/stex/commits/master)
 
+##March 2015
+
+###New Features and Changes
+
+ - Pull Request [44](https://github.com/stellar/stex/pull/44) Capitalize autoloaded modules
+ - Pull Request [46](https://github.com/stellar/stex/pull/46) Upgrade lodash to 3.2.0 [Reverted](https://github.com/stellar/stex/commit/310eb69f9b83b8c2aaf49c66fde98d5f16493c05)
+
 ##February 2015
 
 ###New Features and Changes
 
  - Pull Request [39](https://github.com/stellar/stex/pull/39) Better initializers
-
-###Bug Fixes
 
 ##January 2015
 

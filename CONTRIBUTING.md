@@ -23,7 +23,8 @@ ask contributors to follow so that we can merge your changes quickly.
 
 ## Submitting Changes
 
-* <a href="https://www.clahub.com/agreements/stellar/stex">Sign the Contributor License Agreement</a>.
+* <a href="https://docs.google.com/forms/d/1g7EF6PERciwn7zfmfke5Sir2n10yddGGSXyZsq98tVY/viewform">Sign the Contributor License Agreement</a>
+* All content, comments, and pull requests must follow the [Stellar Community Guidelines](https://www.stellar.org/community-guidelines/). 
 * Push your changes to a topic branch in your fork of the repository.
 * Submit a pull request to the [stex](https://github.com/stellar/stex) repository in the Stellar organization.
  * Include a descriptive [commit message](https://github.com/erlang/otp/wiki/Writing-good-commit-messages).
@@ -44,7 +45,7 @@ an issue number.
 # Additional Resources
 
 * [Bug tracker (Github)](https://github.com/stellar/stex/issues)
-* <a href="https://www.clahub.com/agreements/stellar/stex">Contributor License Agreement</a>
+* <a href="https://docs.google.com/forms/d/1g7EF6PERciwn7zfmfke5Sir2n10yddGGSXyZsq98tVY/viewform">Contributor License Agreement</a>
 * [Explore the API](https://www.stellar.org/api/)
 * [Readme for stex](https://github.com/stellar/stex/blob/master/README.md)
 * #stellar-dev IRC channel on freenode.org
